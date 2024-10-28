@@ -4,14 +4,15 @@ import time
 ADC.setup(0x48)  # Initialize PCF8591 at address 0x48
 
 # Define threshold 
-HIGH_VALUE = 100
-SLIGHTLY_DRY_UPPER = 99
-SLIGHTLY_DRY_LOWER = 56
-WATERED_THRESHOLD = 48
-WATERING_DURATION = 30  # seconds
+HIGH_VALUES = [100, 99, 65]
+WATERED_THRESHOLD = 50
+WAIT_DURATION = 30 # 30 seconds watering time
+DELAY_TIME = 0.6  # Delay next reading of 0.6 seconds
 
 # Initialize variables to track watering status
+previous_moisture_level = None
 watering_start_time = None
+is_watering = False
 
 # Define functions to handle each state
 def need_water_or_not_in_soil():
@@ -34,27 +35,32 @@ try:
     while True:  # Continuously read and print moisture level
         moisture_level = ADC.read(2)  # Read from Soil Moisture Sensor at AIN2
         print(f"Current Moisture Level: {moisture_level}")
-        
-        # Check conditions for soil moisture levels
-        if moisture_level >= HIGH_VALUE:
-            need_water_or_not_in_soil()
-        elif SLIGHTLY_DRY_LOWER <= moisture_level <= SLIGHTLY_DRY_UPPER:
-            need_water()
-        elif SLIGHTLY_DRY_LOWER >= moisture_level > WATERED_THRESHOLD:
-            # Start the watering process if moisture level decreases
-            if watering_start_time is None:
+
+        if not is_watering:
+            if previous_moisture_level in HIGH_VALUES and moisture_level < previous_moisture_level:
+                is_watering = True
                 watering_start_time = time.time()
-            being_watered()
-        elif moisture_level <= WATERED_THRESHOLD:
-            # Continue watering if within the duration
-            if watering_start_time and (time.time() - watering_start_time <= WATERING_DURATION):
                 being_watered()
             else:
-                # Reset watering status
-                watering_start_time = None
-                enough_water()
+                if moisture_level < 60:
+                    enough_water()
+                else:
+                    need_water()
+        else:
+            if moisture_level <= WATERED_THRESHOLD:
+                elapsed_time = time.time() - watering_start_time
+                if elapsed_time >= WAIT_DURATION:
+                    is_watering = False
+                    watering_start_time = None
+                    enough_water()
+                else:
+                    being_watered()
+            else:
+                being_watered()
 
-        time.sleep(0.6)  # Delay of 0.6 seconds
+        previous_moisture_level = moisture_level
+
+        time.sleep(DELAY_TIME)
 
 except KeyboardInterrupt:
     print("Exit")  # Exit on CTRL+C
