@@ -42,7 +42,7 @@ try:
         print(f"Current Moisture Level: {moisture_level}")
 
         if not is_watering:
-            if previous_moisture_level in HIGH_VALUES and moisture_level < previous_moisture_level:
+            if previous_moisture_level in HIGH_VALUES and (previous_moisture_level - moisture_level) >= 5:
                 is_watering = True
                 watering_start_time = time.time()
                 being_watered()
