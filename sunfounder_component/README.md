@@ -10,6 +10,7 @@ Watering system
 - Capacitive Soil Moisture Module
 - PCF8591 ADC/DAC Converter Module
 
+[Component Setup Reference](https://docs.sunfounder.com/projects/umsk/en/latest/05_raspberry_pi/pi_lesson02_soil_moisture.html)
 
 ### Moisture Sensor Testing
 
@@ -22,3 +23,4 @@ I tested the soil moisture sensor in various conditions, and here are the initia
 - Sensor in slightly dry soil: 76 to 77
 - Immediately after watering the soil: 48
 - A short time after watering the soil: 52
+
