@@ -6,33 +6,38 @@ ADC.setup(0x48)  # Initialize PCF8591 at address 0x48
 # Define threshold 
 HIGH_VALUES = [100, 99, 65]
 WATERED_THRESHOLD = 50
-WAIT_DURATION = 30 # 30 seconds watering time
+WAIT_DURATION = 30  # 30 seconds watering time
 DELAY_TIME = 0.6  # Delay next reading of 0.6 seconds
 
-# Initialize variables to track watering status
+# Track watering status
 previous_moisture_level = None
 watering_start_time = None
 is_watering = False
 
+
 # Define functions to handle each state
 def need_water_or_not_in_soil():
     print("Status: Soil is very dry or sensor is not in soil. Action needed.")
-    # TODO: implement the motor/screen logic
+    # TODO: implement motor/screen logic
+
 
 def need_water():
     print("Status: Soil is slightly dry. Monitoring.")
-    # TODO: implement the motor/screen logic
+    # TODO: implement motor/screen logic
+
 
 def being_watered():
     print("Status: Soil is currently being watered.")
-    # TODO: implement the motor/screen logic
+    # TODO: implement motor/screen logic
+
 
 def enough_water():
     print("Status: Soil has enough water. Monitoring.")
-    # TODO: implement the motor/screen logic
+    # TODO: implement motor/screen logic
+
 
 try:
-    while True:  # Continuously read and print moisture level
+    while True:  # Continuously read
         moisture_level = ADC.read(2)  # Read from Soil Moisture Sensor at AIN2
         print(f"Current Moisture Level: {moisture_level}")
 
