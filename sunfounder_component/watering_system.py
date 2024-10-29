@@ -3,9 +3,14 @@ import time
 
 ADC.setup(0x48)  # Initialize PCF8591 at address 0x48
 
-# Define threshold 
-HIGH_VALUES = [100, 99, 65]
-WATERED_THRESHOLD = 50
+# Define threshold
+# HIGH_VALUES = [100, 99, 65] # 5V
+# WATERED_THRESHOLD = 50 # 5V
+
+HIGH_VALUES = [173, 165] # 3V3
+WATERED_THRESHOLD = 100 # 3V3
+WATER_MAX = 82
+
 WAIT_DURATION = 30  # 30 seconds watering time
 DELAY_TIME = 0.6  # Delay next reading of 0.6 seconds
 
@@ -17,12 +22,12 @@ is_watering = False
 
 # Define functions to handle each state
 def need_water_or_not_in_soil():
-    print("Status: Soil is very dry or sensor is not in soil. Action needed.")
+    print("Status: Soil is very dry or sensor is not in soil.")
     # TODO: implement motor/screen logic
 
 
 def need_water():
-    print("Status: Soil is slightly dry. Monitoring.")
+    print("Status: Soil is dry, the plant need water.")
     # TODO: implement motor/screen logic
 
 
@@ -32,7 +37,7 @@ def being_watered():
 
 
 def enough_water():
-    print("Status: Soil has enough water. Monitoring.")
+    print("Status: Soil has enough water.")
     # TODO: implement motor/screen logic
 
 
