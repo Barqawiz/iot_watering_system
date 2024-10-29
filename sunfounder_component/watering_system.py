@@ -52,13 +52,14 @@ try:
                 watering_start_time = time.time()
                 being_watered()
             else:
-                if moisture_level < 60:
+                if moisture_level < WATERED_THRESHOLD:
                     enough_water()
                 else:
                     need_water()
         else:
             if moisture_level <= WATERED_THRESHOLD:
                 elapsed_time = time.time() - watering_start_time
+                
                 if elapsed_time >= WAIT_DURATION:
                     is_watering = False
                     watering_start_time = None
