@@ -1,85 +1,79 @@
-import PCF8591 as ADC  # Import PCF8591 module
+import PCF8591 as ADC
 import time
-
 from pump import start_motor, stop_motor
 
-ADC.setup(0x48)  # Initialize PCF8591 at address 0x48
+# Initialize PCF8591 at address 0x48
+ADC.setup(0x48)
 
-# Define threshold
-# HIGH_VALUES = [100, 99, 65] # 5V
-# WATERED_THRESHOLD = 50 # 5V
-
-HIGH_VALUES = [173, 165] # 3V3
-WATERED_THRESHOLD = 100 # 3V3
+# 3V3 threshold
+HIGH_VALUES = [173, 165]
+WATERED_THRESHOLD = 100 
 WATER_MAX = 82
 
-WAIT_DURATION = 10  # 10 seconds watering time
-DELAY_TIME = 0.6  # Delay next reading of 0.6 seconds
+WAIT_DURATION = 600       # 10 minutes (in seconds)
+DELAY_TIME = 0.6          # Delay 0.6 seconds for next reading
 
 # Track watering status
-previous_moisture_level = None
 watering_start_time = None
 is_watering = False
 
 
 # Define functions to handle each state
 def need_water_or_not_in_soil():
-    print("Status: Soil is very dry or sensor is not in soil.")
-    # TODO: implement motor/screen logic
-
+    print("Status: soil is very dry or sensor is not in soil.")
     start_motor()
+    global is_watering
+    is_watering = True
 
 
 def need_water():
-    print("Status: Soil is dry, the plant need water.")
-    # TODO: implement motor/screen logic
-
+    print("Status: plant needs water.")
     start_motor()
-
-
-def being_watered():
-    print("Status: Soil is currently being watered.")
-    # TODO: implement motor/screen logic
+    global is_watering
+    is_watering = True
 
 
 def enough_water():
-    print("Status: Soil has enough water.")
-    # TODO: implement motor/screen logic
-
+    print("Status: soil has enough water.")
     stop_motor()
 
+def track_water_start_time():
+    watering_start_time = time.time()
 
 try:
-    while True:  # Continuously read
-        moisture_level = ADC.read(2)  # Read from Soil Moisture Sensor at AIN2
+    while True:
+
+        # If currently watering: bypass reading to avoid interference
+        if is_watering:
+            elapsed_time = time.time() - watering_start_time
+
+            if elapsed_time >= WAIT_DURATION:
+                # Stop the motor after watering time
+                is_watering = False
+                watering_start_time = None
+                enough_water()
+            else:
+                # Still watering: skip readings
+                time.sleep(DELAY_TIME)
+                continue
+
+        # Read moisture level
+        moisture_level = ADC.read(2)
         print(f"Current Moisture Level: {moisture_level}")
 
-        if not is_watering:
-            if previous_moisture_level in HIGH_VALUES and (previous_moisture_level - moisture_level) >= 5:
-                is_watering = True
-                watering_start_time = time.time()
-                being_watered()
-            else:
-                if moisture_level < WATERED_THRESHOLD:
-                    enough_water()
-                else:
-                    need_water()
+        # Determine watering levels
+        if moisture_level < WATERED_THRESHOLD:
+            enough_water()
+        elif moisture_level in HIGH_VALUES:
+            need_water()
+            track_water_start_time()
         else:
-            if moisture_level <= WATERED_THRESHOLD:
-                elapsed_time = time.time() - watering_start_time
-                
-                if elapsed_time >= WAIT_DURATION:
-                    is_watering = False
-                    watering_start_time = None
-                    enough_water()
-                else:
-                    being_watered()
-            else:
-                being_watered()
-
-        previous_moisture_level = moisture_level
+            need_water_or_not_in_soil()
+            track_water_start_time()
 
         time.sleep(DELAY_TIME)
 
 except KeyboardInterrupt:
-    print("Exit")  # Exit on CTRL+C
+    # Exit on CTRL+C
+    print("Exit")
+    stop_motor()
