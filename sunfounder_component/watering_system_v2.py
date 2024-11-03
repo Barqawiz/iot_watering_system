@@ -12,6 +12,7 @@ WATER_MAX = 82
 
 WAIT_DURATION = 10       # 10 seconds
 DELAY_TIME = 0.6          # Delay 0.6 seconds for next reading
+BREAK_TIME = 4
 
 # Track watering status
 watering_start_time = None
@@ -57,6 +58,10 @@ try:
                 # Still watering: skip readings
                 time.sleep(DELAY_TIME)
                 continue
+        
+        # Wait the voltage to adjust
+        print("Finished watering - resetting readers")
+        time.sleep(BREAK_TIME)
 
         # Read moisture level
         moisture_level = ADC.read(2)
