@@ -6,7 +6,7 @@ pump_channel = 21
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(pump_channel, GPIO.OUT)
 
-def start_motor(pin):
+def start_motor():
     try:
         # my pump+relay works with GPIO.LOW
         print('- start motor')

@@ -1,7 +1,7 @@
 import PCF8591 as ADC  # Import PCF8591 module
 import time
 
-from pump import start_motor, stop_motor, pump_channel
+from pump import start_motor, stop_motor
 
 ADC.setup(0x48)  # Initialize PCF8591 at address 0x48
 
@@ -27,14 +27,14 @@ def need_water_or_not_in_soil():
     print("Status: Soil is very dry or sensor is not in soil.")
     # TODO: implement motor/screen logic
 
-    start_motor(pump_channel)
+    start_motor()
 
 
 def need_water():
     print("Status: Soil is dry, the plant need water.")
     # TODO: implement motor/screen logic
 
-    start_motor(pump_channel)
+    start_motor()
 
 
 def being_watered():
