@@ -10,7 +10,7 @@ HIGH_VALUES = [173, 165]
 WATERED_THRESHOLD = 100 
 WATER_MAX = 82
 
-WAIT_DURATION = 600       # 10 minutes (in seconds)
+WAIT_DURATION = 10       # 10 seconds
 DELAY_TIME = 0.6          # Delay 0.6 seconds for next reading
 
 # Track watering status
