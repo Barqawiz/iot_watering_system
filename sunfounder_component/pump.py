@@ -10,8 +10,8 @@ def start_motor():
     try:
         # my pump+relay works with GPIO.LOW
         print('- start motor')
-
-        
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(pump_channel, GPIO.OUT)
         GPIO.output(pump_channel, GPIO.LOW)
     except KeyboardInterrupt:
         print('exception')
@@ -20,5 +20,4 @@ def start_motor():
 def stop_motor():
     print('- stop motor')
     GPIO.cleanup()
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(pump_channel, GPIO.OUT)
+    
