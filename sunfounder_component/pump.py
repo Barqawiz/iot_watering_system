@@ -2,9 +2,9 @@ import RPi.GPIO as GPIO
 import time
 
 # GPIO control
-channel = 21
+pump_channel = 21
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(channel, GPIO.OUT)
+GPIO.setup(pump_channel, GPIO.OUT)
 
 def start_motor(pin):
     try:
