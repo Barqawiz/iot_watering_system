@@ -36,7 +36,8 @@ def need_water():
 
 def enough_water():
     print("Status: soil has enough water.")
-    stop_motor()
+    if is_watering:
+        stop_motor()
 
 def track_water_start_time():
     global watering_start_time
@@ -51,9 +52,9 @@ try:
 
             if elapsed_time >= WAIT_DURATION:
                 # Stop the motor after watering time
+                enough_water()
                 is_watering = False
                 watering_start_time = None
-                enough_water()
             else:
                 # Still watering: skip readings
                 time.sleep(DELAY_TIME)
@@ -61,6 +62,7 @@ try:
         
             # Wait the voltage to adjust
             print("Finished watering - resetting readers")
+            stop_motor()
             time.sleep(BREAK_TIME)
 
         # Read moisture level
