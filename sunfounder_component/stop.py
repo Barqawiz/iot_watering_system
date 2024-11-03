@@ -18,3 +18,5 @@ def start_motor(pin):
 def stop_motor():
     print('- stop motor')
     GPIO.cleanup()
+
+stop_motor()
