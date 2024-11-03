@@ -38,6 +38,7 @@ def enough_water():
     stop_motor()
 
 def track_water_start_time():
+    global watering_start_time
     watering_start_time = time.time()
 
 try:
