@@ -22,5 +22,4 @@ def stop_motor():
     print('- stop motor')
     GPIO.cleanup()
 
-#start_motor(pump_channel)
-stop_motor()
+start_motor(pump_channel)
