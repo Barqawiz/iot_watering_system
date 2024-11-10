@@ -7,11 +7,11 @@ ADC.setup(0x48)
 
 # 3V3 threshold
 HIGH_VALUES = [173, 165]
-WATERED_THRESHOLD = 100 
+WATERED_THRESHOLD = 135
 WATER_MAX = 82
 
-WAIT_DURATION = 10       # 10 seconds
-DELAY_TIME = 0.6          # Delay 0.6 seconds for next reading
+WAIT_DURATION = 10  # 10 seconds
+DELAY_TIME = 0.6  # Delay 0.6 seconds for next reading
 BREAK_TIME = 5
 
 # Track watering status
@@ -39,13 +39,14 @@ def enough_water():
     if is_watering:
         stop_motor()
 
+
 def track_water_start_time():
     global watering_start_time
     watering_start_time = time.time()
 
+
 try:
     while True:
-
         # If currently watering: bypass reading to avoid interference
         if is_watering:
             elapsed_time = time.time() - watering_start_time
@@ -59,7 +60,7 @@ try:
                 # Still watering: skip readings
                 time.sleep(DELAY_TIME)
                 continue
-        
+
             # Wait the voltage to adjust
             print("Finished watering - resetting readers")
             stop_motor()
