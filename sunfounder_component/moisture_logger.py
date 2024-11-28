@@ -24,7 +24,7 @@ def get_water_status(moisture_level):
 def log_reading(moisture_level, water_status):
     """Log the readings with timestamp."""
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    log_entry = f"- moisture_reading: {moisture_level}, time: {timestamp}, water_status: {water_status}.\n"
+    log_entry = f"- moisture_reading: {moisture_level}, time: {timestamp}, water_status: {water_status}, watering_threshold: {WATERED_THRESHOLD}.\n"
     with open(LOG_FILE, "a") as file:
         file.write(log_entry)
 
