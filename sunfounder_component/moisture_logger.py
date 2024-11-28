@@ -37,7 +37,7 @@ try:
         # display
         print(f"Moisture Reading: {moisture_level}, Status: {water_status}")
         log_reading(moisture_level, water_status)
-        
-        time.sleep(10)
+
+        time.sleep(30)
 except KeyboardInterrupt:
     print("Exiting program...")
