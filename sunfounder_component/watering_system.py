@@ -15,7 +15,7 @@ WATERED_THRESHOLD = 130 # 3V3
 WATER_MAX = 82
 
 WAIT_DURATION = 10  # 10 seconds watering time
-DELAY_TIME = 0.6  # Delay next reading of 0.6 seconds
+DELAY_TIME = 15  # Delay next reading 15 seconds
 
 # Track watering status
 previous_moisture_level = None
