@@ -10,7 +10,7 @@ ADC.setup(0x48)  # Initialize PCF8591 at address 0x48
 # WATERED_THRESHOLD = 50 # 5V
 
 HIGH_VALUES = [173, 165] # 3V3
-WATERED_THRESHOLD = 100 # 3V3
+WATERED_THRESHOLD = 135 # 3V3
 WATER_MAX = 82
 
 WAIT_DURATION = 10  # 10 seconds watering time
