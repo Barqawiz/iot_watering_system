@@ -29,6 +29,6 @@ For 3v3 power:
 - Sensor outside water and soil: 173
 - Sensor in a cup of water: 73
 - Immediately after watering the soil: 80
-- A short time after watering the soil: 110 
+- A short time after watering the soil: 110 - 128
 
 When using 3v3 power the range increases by 31 points
