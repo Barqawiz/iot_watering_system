@@ -6,7 +6,7 @@ from datetime import datetime
 ADC.setup(0x48)
 
 # thresholds
-WATERED_THRESHOLD = 135
+WATERED_THRESHOLD = 130
 DRY_THRESHOLD = 165
 
 # log file
