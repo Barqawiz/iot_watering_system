@@ -83,3 +83,7 @@ try:
 
 except KeyboardInterrupt:
     print("Exit")  # Exit on CTRL+C
+    stop_motor()
+except Exception as e:
+    print("Error Exception: ", e) 
+    stop_motor()
