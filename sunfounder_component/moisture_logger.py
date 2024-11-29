@@ -9,6 +9,8 @@ ADC.setup(0x48)
 WATERED_THRESHOLD = 130
 DRY_THRESHOLD = 165
 
+SLEEP_TIME = 60*10
+
 # log file
 LOG_FILE = "moisture_log.txt"
 
@@ -38,6 +40,6 @@ try:
         print(f"Moisture Reading: {moisture_level}, Status: {water_status}")
         log_reading(moisture_level, water_status)
 
-        time.sleep(30)
+        time.sleep(SLEEP_TIME)
 except KeyboardInterrupt:
     print("Exiting program...")
