@@ -9,7 +9,7 @@ ADC.setup(0x48)
 WATERED_THRESHOLD = 130
 DRY_THRESHOLD = 165
 
-SLEEP_TIME = 20 # 60*10
+SLEEP_TIME = 30 # 60*10
 
 # log file
 LOG_FILE = "moisture_log.txt"
