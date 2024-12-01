@@ -50,7 +50,7 @@
             let timelineDiv = document.getElementById('timeline');
             timelineDiv.innerHTML = '';
             let previousMoistureLevel = null;
-            
+
             // keep every third entry when index % 3 - to simplify the display 
             let filteredEntries = entries.slice(-DISPLAY_WINDOW).filter((_, index) => index % 1 === 0);
 
@@ -96,7 +96,7 @@
                 let statusP = document.createElement('p');
                 if (waterStatus == "Need Water") {
                     statusP.innerHTML = 'Water Status: <span class="water-status">' + waterStatus + '</span>';
-                } else{
+                } else {
                     statusP.innerHTML = 'Water Status: <span class="water-status-other">' + waterStatus + '</span>';
                 }
 
