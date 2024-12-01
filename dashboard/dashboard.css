@@ -92,6 +92,11 @@ h1 {
     font-weight: bold;
     color: #ff5722;
 }
+.water-status-other {
+    font-weight: bold;
+    color: #2E8B57;
+}
+
 .being-watered {
     color: #4caf50;
     font-weight: bold;

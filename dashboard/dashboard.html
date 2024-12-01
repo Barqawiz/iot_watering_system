@@ -51,8 +51,8 @@
             timelineDiv.innerHTML = '';
             let previousMoistureLevel = null;
             
-            // keep every third entry - to simplify the display 
-            let filteredEntries = entries.slice(-DISPLAY_WINDOW).filter((_, index) => index % 3 === 0);
+            // keep every third entry when index % 3 - to simplify the display 
+            let filteredEntries = entries.slice(-DISPLAY_WINDOW).filter((_, index) => index % 1 === 0);
 
             filteredEntries.forEach((entry, index) => {
                 let moistureReading = parseInt(entry['moisture_reading']);
@@ -94,7 +94,11 @@
                 moistureP.textContent = 'Moisture Reading: ' + moistureReading;
 
                 let statusP = document.createElement('p');
-                statusP.innerHTML = 'Water Status: <span class="water-status">' + waterStatus + '</span>';
+                if (waterStatus == "Need Water") {
+                    statusP.innerHTML = 'Water Status: <span class="water-status">' + waterStatus + '</span>';
+                } else{
+                    statusP.innerHTML = 'Water Status: <span class="water-status-other">' + waterStatus + '</span>';
+                }
 
                 contentDiv.appendChild(timeP);
                 contentDiv.appendChild(moistureP);
