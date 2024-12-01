@@ -9,10 +9,11 @@ ADC.setup(0x48)
 WATERED_THRESHOLD = 130
 DRY_THRESHOLD = 165
 
-SLEEP_TIME = 30 # 60*10
+SLEEP_TIME = 30  # 60*10
 
 # log file
 LOG_FILE = "moisture_log.txt"
+
 
 def get_water_status(moisture_level):
     """Determine water status based on moisture level."""
@@ -23,6 +24,7 @@ def get_water_status(moisture_level):
     else:
         return "Dry"
 
+
 def log_reading(moisture_level, water_status):
     """Log the readings with timestamp."""
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -30,10 +32,11 @@ def log_reading(moisture_level, water_status):
     with open(LOG_FILE, "a") as file:
         file.write(log_entry)
 
+
 try:
     while True:
         # read moisture level
-        moisture_level = ADC.read(2) 
+        moisture_level = ADC.read(2)
         water_status = get_water_status(moisture_level)  # Get water status
 
         # display

@@ -10,8 +10,8 @@ ADC.setup(0x48)  # Initialize PCF8591 at address 0x48
 # HIGH_VALUES = [100, 99, 65] # 5V
 # WATERED_THRESHOLD = 50 # 5V
 
-HIGH_VALUES = [173, 165] # 3V3
-WATERED_THRESHOLD = 130 # 3V3
+HIGH_VALUES = [173, 165]  # 3V3
+WATERED_THRESHOLD = 130  # 3V3
 WATER_MAX = 82
 
 WAIT_DURATION = 10  # 10 seconds watering time
@@ -25,12 +25,14 @@ is_watering = False
 # log file
 LOG_FILE = "watering_system.txt"
 
+
 def log_reading(moisture_level, water_status):
     """Log the readings with timestamp."""
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     log_entry = f"- moisture_reading: {moisture_level}, time: {timestamp}, water_status: {water_status}, watering_threshold: {WATERED_THRESHOLD}.\n"
     with open(LOG_FILE, "a") as file:
         file.write(log_entry)
+
 
 # Define functions to handle each state
 def need_water_or_not_in_soil():
@@ -67,7 +69,10 @@ try:
         water_status = ""
 
         if not is_watering:
-            if previous_moisture_level in HIGH_VALUES and (previous_moisture_level - moisture_level) >= 5:
+            if (
+                previous_moisture_level in HIGH_VALUES
+                and (previous_moisture_level - moisture_level) >= 5
+            ):
                 is_watering = True
                 watering_start_time = time.time()
                 water_status = "Being Watered"
@@ -82,7 +87,7 @@ try:
         else:
             if moisture_level <= WATERED_THRESHOLD:
                 elapsed_time = time.time() - watering_start_time
-                
+
                 if elapsed_time >= WAIT_DURATION:
                     is_watering = False
                     watering_start_time = None
@@ -105,7 +110,9 @@ except KeyboardInterrupt:
     stop_motor()
 except Exception as e:
     error_message = f"Error Exception: {e}"
-    print(error_message) 
+    print(error_message)
     with open(LOG_FILE, "a") as file:
-        file.write(f"- error: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} - {error_message}\n")
+        file.write(
+            f"- error: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} - {error_message}\n"
+        )
     stop_motor()
