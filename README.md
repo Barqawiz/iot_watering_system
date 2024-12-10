@@ -2,6 +2,15 @@
 
 Automated plant watering system that reads monitors soil moisture levels and activates a water pump as needed.
 
+# Key Features
+- Soil Moisture Monitoring.
+- Pump Control.
+- Configurable Thresholds.
+- Logging.
+- Monitoring dashboard.
+- Mobile notification.
+
+
 # Dashboard
 
 <img src="dashboard/dashboard_screen2.png" width="850px" />
