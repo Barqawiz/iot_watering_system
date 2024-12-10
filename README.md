@@ -1,4 +1,4 @@
-# final_project
+# Watering System - IoT Final Project
 
 Automated plant watering system that reads monitors soil moisture levels and activates a water pump as needed.
 
