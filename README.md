@@ -10,6 +10,12 @@ Automated plant watering system that reads monitors soil moisture levels and act
 - Monitoring dashboard.
 - Mobile notification.
 
+# Watering System Code
+
+## Raspberry Pi with Sunfounder PCF8591 Module 
+
+The watering system logic, including the moisture sensor readings, threshold comparison, and pump control, is implemented in the following file:
+`sunfounder_component/watering_system.py`
 
 # Dashboard
 
@@ -21,11 +27,5 @@ cd dashboard
 python3 -m http.server 8000
 ```
 
-# Watering System Code
-
-## Raspberry Pi with Sunfounder PCF8591 Module 
-
-The watering system logic, including the moisture sensor readings, threshold comparison, and pump control, is implemented in the following file:
-`sunfounder_component/watering_system.py`
 
 
