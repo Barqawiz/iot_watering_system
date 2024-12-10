@@ -7,7 +7,10 @@ Automated plant watering system that reads monitors soil moisture levels and act
 <img src="dashboard/dashboard_screen2.png" width="850px" />
 
 ## Run the dashboard
-`python3 -m http.server 8000`
+```bash
+cd dashboard
+python3 -m http.server 8000
+```
 
 # Watering System Code
 
