@@ -37,26 +37,22 @@ def log_reading(moisture_level, water_status):
 # Define functions to handle each state
 def need_water_or_not_in_soil():
     print("Status: Soil is very dry or sensor is not in soil.")
-    # TODO: implement motor/screen logic
 
     start_motor()
 
 
 def need_water():
     print("Status: Soil is dry, the plant need water.")
-    # TODO: implement motor/screen logic
 
     start_motor()
 
 
 def being_watered():
     print("Status: Soil is currently being watered.")
-    # TODO: implement motor/screen logic
 
 
 def enough_water():
     print("Status: Soil has enough water.")
-    # TODO: implement motor/screen logic
 
     stop_motor()
 
