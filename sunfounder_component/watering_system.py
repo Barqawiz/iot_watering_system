@@ -14,7 +14,7 @@ HIGH_VALUES = [173, 165]  # 3V3
 WATERED_THRESHOLD = 130  # 3V3
 WATER_MAX = 82
 
-WAIT_DURATION = 10  # 10 seconds watering time
+WAIT_DURATION = 5  # 5 seconds watering time
 DELAY_TIME = 15  # Delay next reading 15 seconds
 
 # Track watering status
