@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Plant Moisture Monitor Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <h1>Plant Moisture Monitor Dashboard</h1>
+    <div id="timeline" class="timeline"></div>
+    <script>
+        const WATERED_THRESHOLD = 130;
+        const DRY_THRESHOLD = 165;
+        const DISPLAY_WINDOW = 1000;
+
+        function fetchLogFile() {
+            fetch('moisture_log.txt')
+                .then(response => response.text())
+                .then(data => {
+                    parseLogData(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching log file:', error);
+                });
+        }
+
+        function parseLogData(data) {
+            let lines = data.trim().split('\n');
+            let entries = [];
+            for (let line of lines) {
+                if (line.startsWith('- moisture_reading')) {
+                    let entry = parseLogLine(line);
+                    entries.push(entry);
+                }
+            }
+            displayTimeline(entries);
+        }
+
+        function parseLogLine(line) {
+            line = line.slice(2).trim().replace(/\.$/, '');
+            let parts = line.split(', ');
+            let entry = {};
+            for (let part of parts) {
+                let [key, value] = part.split(': ');
+                entry[key] = value;
+            }
+            return entry;
+        }
+
+        function displayTimeline(entries) {
+            let timelineDiv = document.getElementById('timeline');
+            timelineDiv.innerHTML = '';
+            let previousMoistureLevel = null;
+
+            // keep every third entry when index % 3 - to simplify the display 
+            let filteredEntries = entries.slice(-DISPLAY_WINDOW).filter((_, index) => index % 1 === 0);
+
+            filteredEntries.forEach((entry, index) => {
+                let moistureReading = parseInt(entry['moisture_reading']);
+                let time = entry['time'];
+                let waterStatus = entry['water_status'];
+                let isDay = checkIsDay(time);
+
+                let displayBeingWatered = false;
+                let displaySensorMoved = false;
+
+                if (previousMoistureLevel !== null) {
+                    let diff = moistureReading - previousMoistureLevel;
+                    if (diff <= -5) {
+                        displayBeingWatered = true;
+                    } else if (diff >= 8) {
+                        displaySensorMoved = true;
+                    }
+                }
+
+                previousMoistureLevel = moistureReading;
+
+                let itemDiv = document.createElement('div');
+                itemDiv.className = 'timeline-item ' + (index % 2 === 0 ? 'left' : 'right');
+
+                let contentDiv = document.createElement('div');
+                contentDiv.className = 'timeline-content';
+
+                let timeP = document.createElement('p');
+                timeP.className = 'timeline-time';
+
+                let iconImg = document.createElement('img');
+                iconImg.className = 'icon';
+                iconImg.src = isDay ? 'day.png' : 'night.png';
+
+                timeP.appendChild(iconImg);
+                timeP.appendChild(document.createTextNode(time));
+
+                let moistureP = document.createElement('p');
+                moistureP.textContent = 'Moisture Reading: ' + moistureReading;
+
+                let statusP = document.createElement('p');
+                if (waterStatus == "Need Water") {
+                    statusP.innerHTML = 'Water Status: <span class="water-status">' + waterStatus + '</span>';
+                } else {
+                    statusP.innerHTML = 'Water Status: <span class="water-status-other">' + waterStatus + '</span>';
+                }
+
+                contentDiv.appendChild(timeP);
+                contentDiv.appendChild(moistureP);
+                contentDiv.appendChild(statusP);
+
+                if (displayBeingWatered) {
+                    let wateredP = document.createElement('p');
+                    wateredP.className = 'being-watered';
+                    wateredP.textContent = 'Being Watered';
+                    contentDiv.appendChild(wateredP);
+                }
+
+                if (displaySensorMoved) {
+                    let sensorMovedP = document.createElement('p');
+                    sensorMovedP.className = 'sensor-moved';
+                    sensorMovedP.textContent = 'Time gap or the sensor have moved.';
+                    contentDiv.appendChild(sensorMovedP);
+                }
+
+                itemDiv.appendChild(contentDiv);
+                timelineDiv.appendChild(itemDiv);
+            });
+        }
+
+        function checkIsDay(timeString) {
+            let hour = parseInt(timeString.split(' ')[1].split(':')[0]);
+            return (hour >= 6 && hour < 18);
+        }
+
+        fetchLogFile();
+        setInterval(fetchLogFile, 5000);
+    </script>
+</body>
+</html>

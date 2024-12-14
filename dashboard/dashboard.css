@@ -1,0 +1,112 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #fafafa;
+}
+h1 {
+    text-align: center;
+    color: #333;
+}
+.timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+}
+/* vertical line */
+.timeline::before {
+    content: '';
+    position: absolute;
+    width: 2px;
+    background-color: #2196F3;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -1px;
+}
+/* around content */
+.timeline-item {
+    padding: 20px 40px;
+    position: relative;
+    width: 50%;
+    box-sizing: border-box;
+}
+/* circles on the timeline */
+.timeline-item::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #2196F3;
+    border: 3px solid white;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: 1;
+}
+/* left items */
+.timeline-item.left {
+    left: 0;
+}
+.timeline-item.left::after {
+    left: 100%;
+}
+/* right items */
+.timeline-item.right {
+    left: 50%;
+}
+.timeline-item.right::after {
+    left: 0%;
+}
+/* arrows for the content boxes */
+.timeline-item.left .timeline-content::before {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: -15px;
+    transform: translateY(-50%);
+    border-width: 10px 0 10px 10px;
+    border-style: solid;
+    border-color: transparent transparent transparent #e6f7ff;
+}
+.timeline-item.right .timeline-content::before {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    left: -15px;
+    transform: translateY(-50%);
+    border-width: 10px 10px 10px 0;
+    border-style: solid;
+    border-color: transparent #e6f7ff transparent transparent;
+}
+.timeline-content {
+    padding: 20px;
+    background-color: #e6f7ff;
+    position: relative;
+    border-radius: 6px;
+}
+.timeline-time {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.water-status {
+    font-weight: bold;
+    color: #ff5722;
+}
+.water-status-other {
+    font-weight: bold;
+    color: #2E8B57;
+}
+
+.being-watered {
+    color: #4caf50;
+    font-weight: bold;
+}
+.sensor-moved {
+    color: #ff9800;
+    font-weight: bold;
+}
+.icon {
+    width: 24px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
