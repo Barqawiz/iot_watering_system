@@ -1,6 +1,6 @@
-# Watering System - IoT Final Project
+# Watering System - IoT Project
 
-Automated plant watering system that reads monitors soil moisture levels and activates a water pump as needed.
+An automated plant watering system that reads soil moisture levels and activates a water pump to provide optimal hydration for plants. It can be built using platforms like Raspberry Pi or Arduino and communicates with a mobile application or self-hosted dashboard.
 
 # Key Features
 - Soil Moisture Monitoring.
