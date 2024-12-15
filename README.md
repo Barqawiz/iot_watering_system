@@ -28,4 +28,11 @@ python3 -m http.server 8000
 ```
 
 
+# Disclaimer
+This project is published under the MIT license. 
+Any third-party libraries and modules used in this project are subject to their respective licenses.
+
+
+
+
 
