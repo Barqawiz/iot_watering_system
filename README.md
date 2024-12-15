@@ -31,7 +31,7 @@ python3 -m http.server 8000
 # Dart & Flutter Application
 If you would like to connect and view your moisture information through bluetooth to a cell phone, we also created a basic dart application for showing that data.
 
-###To set it up:
+### To set it up:
 - install and enable dart and flutter on your PC
 - build the flutter application in the "DartApp" folder
 - deploy the MoistureTimedBluetooth.py file to your Pi, adjust the "interval" to your preferred update time for the moisture sensor
