@@ -2,7 +2,10 @@
 
 started a chat app with the arduino or raspberry pi via Bluetooth
 evolved to have a graph for displaying active moisture data on request
-from a bluetooth connected raspberry pi
+from a bluetooth connected raspberry pi 
+Primary modifications are in the AppPage.dart and MainPage.dart, all other
+modifications were for compatibility issues, please reference the original app
+for concerns on other components (https://github.com/rickyhh2/flutter_rpi_bluetooth_client)
 
 ## Getting Started
 
