@@ -1,5 +1,6 @@
 #include <WiFi.h>
 #include <WiFiUdp.h>
+#include <LowPower.h>
 
 #include "arduino_secrets.h"
 
@@ -11,6 +12,10 @@ char hostname[] = HOSTNAME;
 
 WiFiUDP udp;
 WiFiServer server(13900);
+
+// Deep Sleep and Active Measurement Interval
+const long sleepInterval = 3600; // 1 Hour sleep
+const long activeInterval = 300; // 5 minutes read
 
 void setup()
 {
@@ -32,13 +37,22 @@ void setup()
 void loop()
 {
     // put your main code here, to run repeatedly:
-    Serial.print("Reading from Sensor:");
-    int moisture = analogRead(A0);
-    Serial.println(moisture);
+    unsigned long startTime = millis();
 
-    // Send UDP Packet
-    udp.beginPacket(hostname, udp_port);
-    udp.print(moisture);
-    udp.endPacket();
-    delay(5000);
+    // Take sensor reading, and transmit to Raspberry PI
+    while (millis() - startTime < activeInterval)
+    {
+        Serial.print("Reading from Sensor:");
+        int moisture = analogRead(A0);
+        Serial.println(moisture);
+
+        // Send UDP Packet
+        udp.beginPacket(hostname, udp_port);
+        udp.print(moisture);
+        udp.endPacket();
+        delay(5000);
+    }
+
+    // Endter Deep Sleep Mode
+    LowPower.powerDown(sleepInterval, ADC_OFF, BOD_OFF);
 }
