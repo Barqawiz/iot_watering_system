@@ -4,11 +4,10 @@ from ParentTimer import ParentTimer
 from datetime import datetime
 from bluedot.btcomm import BluetoothServer
 from signal import pause
-import re
 import json
 
 class MoistureTimer(ParentTimer):
-    interval = 10  # sec
+    interval = 120  # sec
     gain1 = []
     gain2 = []
     gain23 = []
@@ -31,17 +30,17 @@ class MoistureTimer(ParentTimer):
                 for count in [1, 2, 3, 4, 5]:
                     # Add a delay between readings (adjust as needed)
                     time.sleep(0.5)
-                    now = datetime.now()
+                    now = datetime.now().isoformat()
                     raw_sum += self.adc.read_adc(3, gain=gain)
                     # Print the raw ADC value
                 raw_value = raw_sum/5
                 print(str(now) + str(",RawValue{},{}".format(gain, raw_value)), file=open(self.FILENAME, 'a'))
                 if gain == 1:
-                    self.gain1.append([str(now.isoformat()), raw_value])
+                    self.gain1.append([str(now), raw_value])
                 elif gain == 2:
-                    self.gain2.append([str(now.isoformat()), raw_value])
+                    self.gain2.append([str(now), raw_value])
                 else:
-                    self.gain23.append([str(now.isoformat()), raw_value])
+                    self.gain23.append([str(now), raw_value])
         except KeyboardInterrupt:
             print("\nExiting the program.")
 
@@ -61,6 +60,8 @@ class MoistureTimer(ParentTimer):
                 for i, chunk in enumerate(json_chunks):
                     self.bluetoothServer.send(chunk)
                 self.bluetoothServer.send("complete")
+            elif "Reset" in data:
+                self.parse_file()
             else:
                 chunks = [self.gain1[i:i + chunk_size] for i in range(0, len(self.gain1), chunk_size)]
                 json_chunks = [json.dumps(chunk) for chunk in chunks]
@@ -72,25 +73,29 @@ class MoistureTimer(ParentTimer):
 
     def parse_file(self):
         # Open the file in read mode
-        with open('example.txt', 'r') as file:
+        with open(self.FILENAME, 'r') as file:
             # Read all the lines from the file
             lines = file.readlines()
-
+        self.gain1 = []
+        self.gain2 = []
+        self.gain23 = []
         # Loop through each line
-        for line_number, line in enumerate(lines, start=1):
-            # Remove leading and trailing whitespace (like \n, \t)
+        for line_number, line in enumerate(lines, start=0):
+            # # Remove leading and trailing whitespace (like \n, \t)
             cleaned_line = line.strip()
-            values = re.findall(r',', cleaned_line)
-            if values[1] == "RawValue1":
-                self.gain1.append([values[0], values[2]])
-            elif values[1] == "RawValue2":
-                self.gain2.append([values[0], values[2]])
+            values = cleaned_line.split(',')
+            if "RawValue1" in values[1]:
+                self.gain1.append([values[0], float(values[2])])
+            elif "RawValue2" in values[1]:
+                self.gain2.append([values[0], float(values[2])])
             else:
-                self.gain23.append([values[0], values[2]])
+                self.gain23.append([values[0], float(values[2])])
+
 
 
 if __name__ == '__main__':
-    moisture_timer = MoistureTimer("TestFiles/BluetoothLongTest1.txt")
+    # moisture_timer = MoistureTimer(str("TestFiles/BluetoothTest" + datetime.now().isoformat() + ".txt"))
+    moisture_timer = MoistureTimer(str("TestFiles/BluetoothTest2024-12-15T18:51:28.104667.txt"))
     moisture_timer.start()
     # time.sleep(30)
     # moisture_timer.stop()
