@@ -1,7 +1,0 @@
-- moisture_reading: 98, time: 2024-11-28 23:29:52, water_status: Enough Water, watering_threshold: 130.
-- moisture_reading: 98, time: 2024-11-28 23:29:53, water_status: Enough Water, watering_threshold: 130.
-- moisture_reading: 96, time: 2024-11-28 23:31:49, water_status: Enough Water, watering_threshold: 130.
-- moisture_reading: 96, time: 2024-11-28 23:31:50, water_status: Enough Water, watering_threshold: 130.
-- moisture_reading: 96, time: 2024-11-28 23:31:50, water_status: Enough Water, watering_threshold: 130.
-- moisture_reading: 96, time: 2024-11-28 23:31:51, water_status: Enough Water, watering_threshold: 130.
-- moisture_reading: 143, time: 2024-12-01 14:28:45, water_status: Need Water, watering_threshold: 130.
