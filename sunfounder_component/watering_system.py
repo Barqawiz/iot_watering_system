@@ -15,7 +15,7 @@ WATERED_THRESHOLD = 130  # 3V3
 WATER_MAX = 82
 
 WAIT_DURATION = 5  # 5 seconds watering time
-DELAY_TIME = 15  # Delay next reading 15 seconds
+DELAY_TIME = 60 * 10  # Delay next reading 10 minutes
 
 # Track watering status
 previous_moisture_level = None
@@ -37,13 +37,11 @@ def log_reading(moisture_level, water_status):
 # Define functions to handle each state
 def need_water_or_not_in_soil():
     print("Status: Soil is very dry or sensor is not in soil.")
-
     start_motor()
 
 
 def need_water():
     print("Status: Soil is dry, the plant need water.")
-
     start_motor()
 
 
@@ -53,8 +51,9 @@ def being_watered():
 
 def enough_water():
     print("Status: Soil has enough water.")
-
     stop_motor()
+    global is_watering
+    is_watering = False
 
 
 try:
@@ -83,9 +82,7 @@ try:
         else:
             if moisture_level <= WATERED_THRESHOLD:
                 elapsed_time = time.time() - watering_start_time
-
                 if elapsed_time >= WAIT_DURATION:
-                    is_watering = False
                     watering_start_time = None
                     water_status = "Enough Water"
                     enough_water()
@@ -99,7 +96,10 @@ try:
         log_reading(moisture_level, water_status)
         previous_moisture_level = moisture_level
 
-        time.sleep(DELAY_TIME)
+        if not is_watering:
+            time.sleep(DELAY_TIME)
+        else:
+            time.sleep(1)
 
 except KeyboardInterrupt:
     print("Exit")  # Exit on CTRL+C
