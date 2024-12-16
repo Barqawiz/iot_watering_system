@@ -76,7 +76,7 @@ class _MainPage extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Chat Demo'),
+        title: const Text('Moisture Monitor'),
       ),
       body: Container(
         child: ListView(
