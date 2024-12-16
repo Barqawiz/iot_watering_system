@@ -19,9 +19,18 @@ The watering system logic, including the moisture sensor readings, threshold com
 python sunfounder_component/watering_system.py
 ```
 
+### Raspberry Pi 5 with Adafruit ADS1115 Module and Bluetooth
+To run the moisture reader using the Adafruit component, prepared with mobile integration using Bluetooth channel:
+```bash
+python adafruit_component/MoistureTimer.py
+```
+### Arduino UNO R4 Wifi
+The Arduino Uno is an affordable option for managing multiple plants. Each plant can have a dedicated Arduino that communicates with a central Raspberry Pi. For more details check the setup code in
+`arduino/` directory.
+
 # Dashboard
 
-<img src="dashboard/dashboard_screen2.png" width="850px" />
+<img src="dashboard/dashboard_screen2.png" width="750px" />
 
 ### Run the dashboard
 ```bash
