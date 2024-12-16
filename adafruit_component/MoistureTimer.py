@@ -19,22 +19,19 @@ class MoistureTimer(ParentTimer):
 
     def timer(self):
         try:
-            now = datetime.now()
-            raw_value = self.adc.read_adc(3, gain=self.GAIN)
-            # raw_value = self.something
-            # Print the raw ADC value
-            print(str(now) + str(" Raw Value: {}".format(raw_value)), file=open(self.FILENAME, 'a'))
-
-            # if raw_value > self.THRESHOLD:
-            #     print("No Water", file=open(self.FILENAME, 'a'))
-            # else:
-            #     print("Water", file=open(self.FILENAME, 'a'))
+            for gain in [16, 8, 4, 2, 1, 2 / 3]:
+                # Add a delay between readings (adjust as needed)
+                time.sleep(0.5)
+                now = datetime.now()
+                raw_value = self.adc.read_adc(3, gain=gain)
+                # Print the raw ADC value
+                print(str(now) + str(" RawValue{}: {}".format(gain, raw_value)), file=open(self.FILENAME, 'a'))
         except KeyboardInterrupt:
             print("\nExiting the program.")
 
 
 if __name__ == '__main__':
-    moisture_timer = MoistureTimer("TestFiles/24HourTest.txt")
+    moisture_timer = MoistureTimer("TestFiles/ThirdLongTest.txt")
     moisture_timer.start()
     # time.sleep(30)
     # moisture_timer.stop()
