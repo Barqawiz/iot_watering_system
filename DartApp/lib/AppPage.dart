@@ -150,8 +150,8 @@ class _AppPage extends State<AppPage> {
                   ],
                   minX: minXRaw,
                   maxX: maxXRaw,
-                  minY: minYRaw - 2,
-                  maxY: maxYRaw + 2,
+                  minY: minYRaw - ((maxYRaw - minYRaw)/5),
+                  maxY: maxYRaw + ((maxYRaw - minYRaw)/5),
                   titlesData: FlTitlesData(
                     topTitles: AxisTitles(
                       sideTitles: SideTitles(showTitles: false), // Disable top labels
@@ -193,7 +193,7 @@ class _AppPage extends State<AppPage> {
                   ),
                   gridData: FlGridData(
                     show: true,
-                    horizontalInterval: 4, // Control the space between Y-axis grid lines
+                    horizontalInterval: ((maxYRaw - minYRaw)/5), // Control the space between Y-axis grid lines
                   ),
                   borderData: FlBorderData(
                     show: true,
@@ -213,19 +213,25 @@ class _AppPage extends State<AppPage> {
                   onPressed: isConnected
                           ? () => _sendMessage("Gain1")
                           : null,
-                  child: Text('View Gain 1'),
+                  child: Text('Gain 1'),
                 ),
                 ElevatedButton(
                   onPressed: isConnected
                           ? () => _sendMessage("Gain2")
                           : null,
-                  child: Text('View Gain 2'),
+                  child: Text('Gain 2'),
                 ),
                 ElevatedButton(
                   onPressed: isConnected
                           ? () => _sendMessage("Gain23")
                           : null,
-                  child: Text('View Gain 2/3'),
+                  child: Text('Gain 2/3'),
+                ),
+                ElevatedButton(
+                  onPressed: isConnected
+                          ? () => _sendMessage("Reset")
+                          : null,
+                  child: Text('Reset Data'),
                 ),
               ],
             ),
@@ -269,50 +275,6 @@ class _AppPage extends State<AppPage> {
       }
     }
   }
-    // int backspacesCounter = 0;
-    // data.forEach((byte) {
-    //   if (byte == 8 || byte == 127) {
-    //     backspacesCounter++;
-    //   }
-    // });
-    // Uint8List buffer = Uint8List(data.length - backspacesCounter);
-    // int bufferIndex = buffer.length;
-
-    // // Apply backspace control character
-    // backspacesCounter = 0;
-    // for (int i = data.length - 1; i >= 0; i--) {
-    //   if (data[i] == 8 || data[i] == 127) {
-    //     backspacesCounter++;
-    //   } else {
-    //     if (backspacesCounter > 0) {
-    //       backspacesCounter--;
-    //     } else {
-    //       buffer[--bufferIndex] = data[i];
-    //     }
-    //   }
-    // }
-
-    // // Create message if there is new line character
-    // String dataString = String.fromCharCodes(buffer);
-    // int index = buffer.indexOf(13);
-    // if (~index != 0) {
-    //   setState(() {
-        
-    //     message = backspacesCounter > 0
-    //             ? _messageBuffer.substring(
-    //                 0, _messageBuffer.length - backspacesCounter)
-    //             : _messageBuffer + dataString.substring(0, index);
-        
-    //     _messageBuffer = dataString.substring(index);
-    //   });
-    // } else {
-    //   _messageBuffer = (backspacesCounter > 0
-    //       ? _messageBuffer.substring(
-    //           0, _messageBuffer.length - backspacesCounter)
-    //       : _messageBuffer + dataString);
-    // }
-    // print(message);
-  // }
 
   void _sendMessage(String text) async {
     text = text.trim();
