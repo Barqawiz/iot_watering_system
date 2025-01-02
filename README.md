@@ -20,6 +20,7 @@ python sunfounder_component/watering_system.py
 ```
 
 <img src="sunfounder_component/plant_motor_in_action.gif" height="450px"/>
+Note: To ensure long-term reliability of the setup, consider using a cooling fan.
 
 ### Raspberry Pi 5 with Adafruit ADS1115 Module and Bluetooth
 To run the moisture reader using the Adafruit component, prepared with mobile integration using Bluetooth channel:
